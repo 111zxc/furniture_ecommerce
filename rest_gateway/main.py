@@ -1,7 +1,8 @@
-from fastapi import FastAPI
-from src.user_service import create_user, update_user, delete_user, get_user
+from fastapi import FastAPI, Header
+from src.auth_service import check_rights
+from src.user_service import create_user, update_user, delete_user, get_user, check_credentials
 from src.product_service import create_product, update_product, delete_product, get_product
-from src.models import User, FullUser, Product
+from src.models import User, FullUser, Product, LoginData
 
 app = FastAPI()
 
@@ -17,18 +18,27 @@ async def get_user_endpoint(user_id: str):
     return got_user
 
 @app.put('/api/v1/users/{user_id}')
-async def update_user_endpoint(user_id: str, user: FullUser):
+async def update_user_endpoint(user_id: str, user: FullUser, token: str = Header(None)):
+    token_user_id = check_rights(token)
+    if token_user_id == -1 or token_user_id != int(user_id):
+        return {"error": "wrong token"}
     result = update_user(user_id, user)
     return result
 
 
 @app.delete('/api/v1/users/{user_id}')
-async def delete_user_endpoint(user_id: str):
+async def delete_user_endpoint(user_id: str, token: str = Header(None)):
+    token_user_id = check_rights(token)
+    if token_user_id == -1 or token_user_id != int(user_id):
+        return {"error": "wrong token"}
     result = delete_user(user_id)
     return result
 
 @app.post('/api/v1/products/')
-async def create_product_endpoint(product: Product):
+async def create_product_endpoint(product: Product, token: str = Header(None)):
+    token_user_id = check_rights(token)
+    if token_user_id == -1 or token_user_id != int(product.owner_id):
+        return {"error": "wrong token"}
     result = create_product(product)
     return result
 
@@ -39,10 +49,17 @@ async def get_product_endpoint(product_id: str):
 
 @app.put('/api/v1/products/{product_id}')
 async def update_product_endpoint(product_id: str, product: Product):
+    # TODO: authorize
     result = update_product(product_id, product)
     return result
 
 @app.delete('/api/v1/products/{product_id}')
 async def delete_product_endpoint(product_id: str):
+    # TODO: authorize
     result = delete_product(product_id)
+    return result
+
+@app.post('/api/v1/users/login')
+async def login_user(login_data: LoginData):
+    result = check_credentials(login_data)
     return result

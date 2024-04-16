@@ -13,6 +13,20 @@ service UserService {
 
   // Метод для удаления пользователя
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+
+  // Метод для проверки данных (для входа)
+  rpc CheckCredentials(CheckCredentialsRequest) returns (CheckCredentialsResponse);
+}
+
+// Определение сообщения проверки данных
+message CheckCredentialsRequest {
+  string username = 1;
+  string password = 2;
+}
+
+// Определение ответа проверки данных
+message CheckCredentialsResponse {
+  string user_id = 1;
 }
 
 // Определение сообщения пользователя

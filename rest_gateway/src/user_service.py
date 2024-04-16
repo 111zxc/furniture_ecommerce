@@ -1,5 +1,6 @@
 import grpc
 from proto import user_pb2_grpc, user_pb2
+from src.auth_service import issue_token
 
 def create_user(user):
     with grpc.insecure_channel("localhost:50051") as channel:
@@ -75,3 +76,12 @@ def delete_user(user_id):
         "success": response.success
     }
     return result
+
+def check_credentials(LoginData):
+    with grpc.insecure_channel('localhost:50051') as channel:
+        client = user_pb2_grpc.UserServiceStub(channel)
+        request = user_pb2.CheckCredentialsRequest(username=LoginData.username, password=LoginData.password)
+        response = client.CheckCredentials(request)
+    user_id = response.user_id
+    token = issue_token(user_id)
+    return {"token": token}
