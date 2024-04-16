@@ -2,7 +2,6 @@ import asyncio
 import logging
 
 from dotenv import load_dotenv
-
 from src.user_controller import serve as server_user_service
 
 

@@ -2,9 +2,9 @@ import logging
 
 import grpc
 from grpc_reflection.v1alpha import reflection
+from proto import user_pb2, user_pb2_grpc
 from sqlalchemy.future import select
 from sqlalchemy.orm import joinedload
-from proto import user_pb2, user_pb2_grpc
 from src.models import Password, User
 from src.password_service import Hasher
 from src.postgre_service import DatabaseManager
@@ -91,23 +91,26 @@ class UserServicer(user_pb2_grpc.UserServiceServicer):
             await session.commit()
 
         return user_pb2.DeleteUserResponse(success=True)
-    
+
     async def CheckCredentials(self, request, context):
         async with self.db_manager.get_session() as session:
             user = await session.execute(
-            select(User).options(joinedload(User.password)).where(User.username == request.username)
-        )
+                select(User)
+                .options(joinedload(User.password))
+                .where(User.username == request.username)
+            )
             user = user.scalars().first()
-            
+
             if user is None:
                 return user_pb2.CheckCredentialsResponse(user_id="-1")
 
-            # Проверяем пароль
-            if user.password.md5_password == Hasher.hash_md5(request.password) or \
-            user.password.sha256_password == Hasher.hash_sha256(request.password):
+            if user.password.md5_password == Hasher.hash_md5(
+                request.password
+            ) or user.password.sha256_password == Hasher.hash_sha256(request.password):
                 return user_pb2.CheckCredentialsResponse(user_id=str(user.id))
             else:
                 return user_pb2.CheckCredentialsResponse(user_id="-1")
+
 
 async def serve():
     server = grpc.aio.server()

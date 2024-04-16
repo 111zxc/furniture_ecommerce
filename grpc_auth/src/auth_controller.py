@@ -24,7 +24,6 @@ class AuthorizationServicer(authorization_pb2_grpc.AuthorizationServicer):
             logging.info(f"Token {request.token} was verified revoked")
             return authorization_pb2.VerifyTokenResponse(valid=False)
 
-        # Если токен не был аннулирован, продолжаем с проверкой его валидности
         valid = self.auth_manager.verify_token(request.token)
         logging.info(
             f"Token {request.token} was\

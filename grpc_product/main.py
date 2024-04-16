@@ -2,7 +2,6 @@ import asyncio
 import logging
 
 from dotenv import load_dotenv
-
 from src.product_controller import serve as server_product_service
 
 

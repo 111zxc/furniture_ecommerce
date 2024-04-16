@@ -3,7 +3,6 @@ import logging
 import grpc
 from google.protobuf.json_format import MessageToDict
 from grpc_reflection.v1alpha import reflection
-
 from proto import product_pb2, product_pb2_grpc
 from src.mongo_service import ProductDB
 
@@ -22,7 +21,7 @@ class ProductServicer(product_pb2_grpc.ProductServiceServicer):
             "owner_id": request.product.owner_id,
         }
         product_id = self.db.create_product(product_fields)
-        # Создаем объект Product с использованием извлеченных полей
+
         return product_pb2.Product(
             _id=product_id,
             name=product_fields["name"],
