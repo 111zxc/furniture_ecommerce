@@ -2,7 +2,7 @@ import asyncio
 import logging
 
 from dotenv import load_dotenv
-from src.authorization_controller import serve as serve_authorization_service
+from src.auth_controller import serve as serve_authorization_service
 
 
 async def main():
