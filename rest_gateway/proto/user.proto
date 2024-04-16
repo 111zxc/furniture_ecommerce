@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+// gRPC сервис для управления пользователями
+service UserService {
+  // Метод для создания нового пользователя
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+
+  // Метод для получения информации о пользователе по его идентификатору
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+
+  // Метод для обновления информации о пользователе
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+
+  // Метод для удаления пользователя
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+}
+
+// Определение сообщения пользователя
+message User {
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  string role = 4;
+}
+
+// Запрос на создание пользователя
+message CreateUserRequest {
+  string username = 1;
+  string email = 2;
+  string password = 3;
+}
+
+// Ответ на запрос создания пользователя
+message CreateUserResponse {
+  string user_id = 1;
+}
+
+// Запрос на получение информации о пользователе по идентификатору
+message GetUserRequest {
+  string user_id = 1;
+}
+
+// Ответ на запрос информации о пользователе
+message GetUserResponse {
+  User user = 1;
+}
+
+// Запрос на обновление информации о пользователе
+message UpdateUserRequest {
+  string user_id = 1;
+  User updated_user = 2;
+}
+
+// Ответ на запрос обновления информации о пользователе
+message UpdateUserResponse {
+  bool success = 1;
+}
+
+// Запрос на удаление пользователя
+message DeleteUserRequest {
+  string user_id = 2;
+}
+
+// Ответ на запрос удаления пользователя
+message DeleteUserResponse {
+  bool success = 1;
+}

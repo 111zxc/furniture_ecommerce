@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+// Протокол для авторизации
+service Authorization {
+    // Выдача JWT токена после успешной аутентификации
+    rpc IssueToken(IssueTokenRequest) returns (IssueTokenResponse);
+
+    // Проверка валидности JWT токена
+    rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse);
+
+    // Получение информации о пользователе из JWT токена
+    rpc GetUserInfoFromToken(GetUserInfoFromTokenRequest) returns (GetUserInfoFromTokenResponse);
+
+    // Отзыв JWT токена
+    rpc RevokeToken(RevokeTokenRequest) returns (RevokeTokenResponse);
+}
+
+// Запрос для выдачи JWT токена после успешной аутентификации
+message IssueTokenRequest {
+    int32 user_id = 1;
+}
+
+// Ответ на запрос выдачи JWT токена
+message IssueTokenResponse {
+    string token = 1;
+}
+
+// Запрос для проверки валидности JWT токена
+message VerifyTokenRequest {
+    string token = 1;
+}
+
+// Ответ на запрос проверки валидности JWT токена
+message VerifyTokenResponse {
+    bool valid = 1;
+}
+
+// Запрос для получения информации о пользователе из JWT токена
+message GetUserInfoFromTokenRequest {
+    string token = 1;
+}
+
+// Ответ на запрос получения информации о пользователе из JWT токена
+message GetUserInfoFromTokenResponse {
+    int32 user_id = 1;
+}
+
+// Запрос для отзыва JWT токена
+message RevokeTokenRequest {
+    string token = 1;
+}
+
+// Ответ на запрос отзыва JWT токена
+message RevokeTokenResponse {
+    bool success = 1;
+}

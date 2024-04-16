@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package product;
+
+// Определение сообщения для товара
+message Product {
+ string _id = 1; // Уникальный идентификатор товара
+ string name = 2; // Название товара
+ string description = 3; // Описание товара
+ double price = 4; // Цена товара
+ string state = 5; // Состояние товара
+ string owner_id = 6; // id владельца товара
+}
+
+// Сервис для управления товарами
+service ProductService {
+ // Создание нового товара
+ rpc CreateProduct(CreateProductRequest) returns (Product) {}
+
+ // Чтение информации о товаре по его идентификатору
+ rpc GetProduct(GetProductRequest) returns (Product) {}
+
+ // Обновление информации о товаре
+ rpc UpdateProduct(UpdateProductRequest) returns (Product) {}
+
+ // Удаление товара по его идентификатору
+ rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse) {}
+}
+
+// Запрос на создание товара
+message CreateProductRequest {
+ Product product = 1;
+}
+
+// Запрос на чтение информации о товаре
+message GetProductRequest {
+ string id = 1;
+}
+
+// Запрос на обновление информации о товаре
+message UpdateProductRequest {
+ Product product = 1;
+}
+
+// Запрос на удаление товара
+message DeleteProductRequest {
+ string id = 1;
+}
+
+// Ответ на запрос удаления товара
+message DeleteProductResponse {
+ bool success = 1;
+}
