@@ -14,3 +14,8 @@ services:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: mydatabase
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
