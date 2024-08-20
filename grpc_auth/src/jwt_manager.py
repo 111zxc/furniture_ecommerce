@@ -1,21 +1,21 @@
 import logging
-import os
 from datetime import datetime, timedelta
 
 import jwt
 
+from grpc_auth.src.config import config
 
-class AuthManager:
+
+class JwtManager:
     JWT_ALGORITHM = ["HS256"]
 
     def __init__(self):
-        self.secret_key = os.getenv("JWT_SECRET_KEY")
+        self.secret_key = config.JWT_SECRET_KEY
 
     def generate_token(self, user_id):
         payload = {
             "user_id": user_id,
-            "exp": datetime.utcnow()
-            + timedelta(days=1),  # Установка срока действия токена на 1 день
+            "exp": datetime.now() + timedelta(days=1),
         }
         token = jwt.encode(payload, self.secret_key, algorithm=self.JWT_ALGORITHM[0])
         return token

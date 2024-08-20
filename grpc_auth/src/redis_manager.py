@@ -1,8 +1,9 @@
 import logging
-import os
 from typing import Any, Literal
 
 from redis import asyncio as aioredis
+
+from grpc_auth.src.config import config
 
 
 class RedisManager:
@@ -11,7 +12,7 @@ class RedisManager:
 
     async def connect(self) -> None:
         try:
-            host = os.getenv("HOSTNAME")
+            host = config.REDIS_HOSTNAME
             self.redis_pool = aioredis.ConnectionPool.from_url(f"redis://{host}")
             logging.info("Connected to Redis")
         except Exception as e:
