@@ -14,5 +14,6 @@ async def main():
         logging.error("Service encountered an error: {}".format(e))
         raise
 
+
 if __name__ == "__main__":
     asyncio.run(main())

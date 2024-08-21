@@ -8,7 +8,12 @@ from grpc_user.src.config import config
 from grpc_user.src.user_servicer import UserServicer
 
 
-async def serve():
+async def serve() -> None:
+    """
+    Starts the user server.
+
+    This function initializes a gRPC server on the specified port.
+    """
     server = grpc.aio.server()
     user_servicer = UserServicer()
     await user_servicer.db_manager.connect()
