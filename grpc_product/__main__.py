@@ -1,7 +1,6 @@
 import asyncio
 import logging
 
-
 from grpc_product.src.server import serve as server_product_service
 
 

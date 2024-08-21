@@ -8,7 +8,12 @@ from grpc_product.src.config import config
 from grpc_product.src.product_servicer import ProductServicer
 
 
-async def serve():
+async def serve() -> None:
+    """
+    Starts the product server.
+
+    This function initializes a gRPC server on the specified port.
+    """
     server = grpc.aio.server()
     product_servicer = ProductServicer()
 
