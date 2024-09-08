@@ -35,7 +35,7 @@ def get_user_endpoint(user_id: str):
     return got_user
 
 
-@authorize(["admin"])
+@authorize(["user", "admin"])
 @router.put("/{user_id}")
 def update_user_endpoint(user_id: str, user: FullUser, token: str = Header(None)):
     result = update_user(user_id, user)

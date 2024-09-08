@@ -9,6 +9,32 @@ PRODUCT_SERVICE_ADDRESS = (
 )
 
 
+def get_all_products() -> list[dict[str, str]]:
+    """
+    Retrieves all products from the product service.
+
+    Returns:
+        list[dict[str, str]]: list of products
+    """
+    with grpc.insecure_channel(PRODUCT_SERVICE_ADDRESS) as channel:
+        client = product_pb2_grpc.ProductServiceStub(channel)
+        request = product_pb2.GetAllProductsRequest()
+        response = client.GetAllProducts(request)
+    result = []
+    for product in response.products:
+        result.append(
+            {
+                "id": product._id,
+                "name": product.name,
+                "description": product.description,
+                "price": product.price,
+                "state": product.state,
+                "owner_id": product.owner_id,
+            }
+        )
+    return result
+
+
 def create_product(product: product_pb2.Product) -> dict[str, str]:
     """
     Creates a new product using the provided product details.

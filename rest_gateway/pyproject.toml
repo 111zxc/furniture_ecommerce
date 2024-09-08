@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "rest-gateway"
+version = "0.1.0"
+description = ""
+authors = ["Yury Zimarev <yury.zimarev@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+annotated-types = "0.7.0"
+anyio = "4.4.0"
+click = "8.1.7"
+colorama = "0.4.6"
+fastapi = "0.114.0"
+grpcio = "1.66.1"
+grpcio-tools = "1.66.1"
+h11 = "0.14.0"
+idna = "3.8"
+protobuf = "5.28.0"
+pydantic = "2.9.0"
+pydantic-core = "2.23.2"
+python-dotenv = "1.0.1"
+setuptools = "74.1.2"
+sniffio = "1.3.1"
+starlette = "0.38.5"
+typing-extensions = "4.12.2"
+tzdata = "2024.1"
+uvicorn = "0.30.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

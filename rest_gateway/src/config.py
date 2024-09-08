@@ -23,3 +23,4 @@ class Config:
 
 
 config = Config()
+print(Config.__dict__)

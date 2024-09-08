@@ -8,6 +8,7 @@ from rest_gateway.src.services.product_service import (
     delete_product,
     get_product,
     update_product,
+    get_all_products,
 )
 
 """
@@ -32,10 +33,15 @@ def create_product_endpoint(product: Product, token: str = Header(None)):
     return result
 
 
-@authorize(["user", "admin"])
+# @authorize(["user", "admin"])
 @router.get("/{product_id}")
 def get_product_endpoint(product_id: str):
     result = get_product(product_id)
+    return result
+
+@router.get('/')
+def get_all_products_endpoint():
+    result = get_all_products()
     return result
 
 

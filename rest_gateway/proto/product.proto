@@ -1,6 +1,7 @@
 syntax = "proto3";
 
-package product;
+package grpc_product.proto;
+
 
 // Определение сообщения для товара
 message Product {
@@ -10,6 +11,14 @@ message Product {
  double price = 4; // Цена товара
  string state = 5; // Состояние товара
  string owner_id = 6; // id владельца товара
+}
+
+// Запрос для получения всех товаров
+message GetAllProductsRequest {}
+
+// Ответ с информацией о всех товарах
+message GetAllProductsResponse {
+  repeated Product products = 1; // Список всех товаров
 }
 
 // Сервис для управления товарами
@@ -25,6 +34,9 @@ service ProductService {
 
  // Удаление товара по его идентификатору
  rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse) {}
+
+ // Получение всех товаров
+ rpc GetAllProducts(GetAllProductsRequest) returns (GetAllProductsResponse) {}
 }
 
 // Запрос на создание товара

@@ -60,3 +60,23 @@ services:
       POSTGRES_URL: postgres
       POSTGRES_DB_NAME: mydatabase
       SERVER_PORT: 50051
+
+  gateway:
+    build:
+      context: ./rest_gateway/
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth_service
+      - user_service
+      - product_service
+    environment:
+      AUTH_SERVICE_HOSTNAME: auth_service
+      AUTH_SERVICE_PORT: 50052
+      USER_SERVICE_HOSTNAME: user_service
+      USER_SERVICE_PORT: 50051
+      PRODUCT_SERVICE_HOSTNAME: product_service
+      PRODUCT_SERVICE_PORT: 50053
+      HOST: 0.0.0.0
+      PORT: 8080
