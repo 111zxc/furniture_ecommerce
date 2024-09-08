@@ -19,3 +19,18 @@ services:
     image: mongo:latest
     ports:
       - "27017:27017"
+
+  product_service:
+    build:
+      context: ./grpc_product/
+      dockerfile: Dockerfile
+    ports:
+      - "50053:50053"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_HOSTNAME: mongo
+      MONGO_PORT: 27017
+      MONGO_DB_NAME: "my_database"
+      MONGO_COLLECTION_NAME: "products"
+      SERVER_PORT: 50053

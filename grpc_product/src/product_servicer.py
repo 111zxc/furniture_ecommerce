@@ -164,3 +164,34 @@ class ProductServicer(product_pb2_grpc.ProductServiceServicer):
         except Exception as e:
             self._handle_error(context, e)
             return product_pb2.DeleteProductResponse(success=False)
+
+    def GetAllProducts(
+        self, request: product_pb2.GetAllProductsRequest, context: grpc.ServicerContext
+    ) -> product_pb2.GetAllProductsResponse:
+        """
+        Retrieves all products from the database.
+
+        Args:
+            request (product_pb2.GetAllProductsRequest): The request for all products.
+            context (grpc.ServicerContext): The gRPC service context.
+
+        Returns:
+            product_pb2.GetAllProductsResponse: The response containing the list of all products.
+        """
+        try:
+            products = self.db.get_all_products()
+            product_list = [
+                product_pb2.Product(
+                    _id=str(product["_id"]),
+                    name=product["name"],
+                    description=product["description"],
+                    price=product["price"],
+                    state=product["state"],
+                    owner_id=product["owner_id"],
+                )
+                for product in products
+            ]
+            return product_pb2.GetAllProductsResponse(products=product_list)
+        except Exception as e:
+            self._handle_error(context, e)
+            return product_pb2.GetAllProductsResponse(products=[])
