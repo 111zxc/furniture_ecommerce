@@ -45,3 +45,18 @@ services:
       REDIS_HOSTNAME: redis
       JWT_SECRET_KEY: secret
       SERVER_PORT: 50052
+
+  user_service:
+    build:
+      context: ./grpc_user/
+      dockerfile: Dockerfile
+    ports:
+      - "50051:50051"
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_USERNAME: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_URL: postgres
+      POSTGRES_DB_NAME: mydatabase
+      SERVER_PORT: 50051

@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "grpc-user"
+version = "0.1.0"
+description = ""
+authors = ["Yury Zimarev <yury.zimarev@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+asyncpg = "0.29.0"
+greenlet = "3.0.3"
+grpcio = "1.62.1"
+grpcio-reflection = "1.62.1"
+grpcio-tools = "1.62.1"
+protobuf = "4.25.3"
+python-dotenv = "1.0.1"
+setuptools = "69.5.1"
+typing-extensions = "4.11.0"
+sqlalchemy = "2.0.29"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
