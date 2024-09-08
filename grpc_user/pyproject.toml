@@ -14,7 +14,7 @@ grpcio-reflection = "1.62.1"
 grpcio-tools = "1.62.1"
 protobuf = "4.25.3"
 python-dotenv = "1.0.1"
-setuptools = "69.5.1"
+setuptools = "70.0.0"
 typing-extensions = "4.11.0"
 sqlalchemy = "2.0.29"
 
